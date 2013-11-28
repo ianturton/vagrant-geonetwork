@@ -28,30 +28,31 @@ $ git clone https://github.com/lushc/vagrant-geonetwork geonetwork-vm
 $ cd geonetwork-vm
 ```
 
-If you've already got a local Maven 2 repository and want to use it (to avoid re-downloading all the GeoNetwork dependencies if you've got them already) then edit the Vagrantfile and change the *M2_HOME* variable to point to the correct path.
-
-Next install the Librarian-Chef plugin and boot up the VM.
-
-```bash
-$ vagrant plugin install vagrant-librarian-chef
-$ cd vagrant
-$ vagrant up
-$ vagrant ssh
-```
+If you've got a local Maven 2 repository and want to use it (to avoid re-downloading all the GeoNetwork dependencies if you've got them already) then edit the Vagrantfile and change the *M2_HOME* variable to point to the correct path. Or you could just symlink the .m2 folder.
 
 Clone core-geonetwork (remember to clone your own fork)
 
 ```bash
-$ cd /home/vagrant/src
-$ git clone https://github.com/lushc/core-geonetwork
+$ cd src
+$ git clone https://github.com/<username>/core-geonetwork
 $ cd core-geonetwork
 $ git remote add upstream https://github.com/geonetwork/core-geonetwork
 $ git submodule update --init --recursive
 ```
 
+Next install the Librarian-Chef plugin and boot up the VM.
+
+```bash
+$ cd ../../vagrant
+$ vagrant plugin install vagrant-librarian-chef
+$ vagrant up
+$ vagrant ssh
+```
+
 Time to build GeoNetwork! (this might take awhile so grab something to eat/drink)
 
 ```bash
+$ cd ~/src/core-geonetwork
 $ mvn clean install -Dclosure.path=/usr/local/closure-library
 ```
 
